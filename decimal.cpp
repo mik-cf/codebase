@@ -1,19 +1,18 @@
-#include <algorithm>
-#include <cmath>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <regex>
-#include <sstream>
+#include <iomanip>
 #include <string>
+#include <sstream>
 #include <vector>
+#include <map>
+#include <cmath>
+#include <algorithm>
+#include <regex>
 using namespace std;
 
 // 获取小数点后的精度
 int getPrecision(const string &s) {
     size_t p = s.find('.');
-    if (p == string::npos)
-        return 0;
+    if (p == string::npos) return 0;
     return s.size() - p - 1;
 }
 
@@ -25,8 +24,7 @@ pair<int64_t, int64_t> rationalize(const string &s) {
     ss >> x;
 
     // 处理整数情况
-    if (precision == 0)
-        return {static_cast<int64_t>(x), 1};
+    if (precision == 0) return {static_cast<int64_t>(x), 1};
 
     // 连分数展开算法
     vector<int64_t> a;
@@ -37,8 +35,7 @@ pair<int64_t, int64_t> rationalize(const string &s) {
         a.push_back(intPart);
 
         rem -= intPart;
-        if (rem < 1e-15)
-            break; // 达到精度限制
+        if (rem < 1e-15) break; // 达到精度限制
 
         rem = 1.0 / rem;
     }
@@ -93,8 +90,7 @@ map<int64_t, int64_t> factorize(int64_t x) {
         }
     }
 
-    if (x > 1)
-        factors[x]++;
+    if (x > 1) factors[x]++;
     return factors;
 }
 
@@ -119,8 +115,7 @@ int64_t gcd(int64_t a, int64_t b) {
 // 计算 a^b
 int64_t power(int64_t a, int64_t b) {
     int64_t res = 1;
-    while (b--)
-        res *= a;
+    while (b--) res *= a;
     return res;
 }
 
@@ -132,8 +127,7 @@ void rationalizeWithRoot(const string &s) {
     ss >> x;
 
     bool isNegative = (x < 0);
-    if (isNegative)
-        x = -x;
+    if (isNegative) x = -x;
 
     // 计算 x 的平方
     long double x_squared = x * x;
@@ -151,7 +145,7 @@ void rationalizeWithRoot(const string &s) {
         return;
     }
 
-    // 因子分解
+    // 因子分解 
     auto facp = factorize(p);
     auto facq = factorize(q);
     auto facpq = merge(facp, facq);
@@ -169,14 +163,14 @@ void rationalizeWithRoot(const string &s) {
     c /= g;
 
     // 输出结果
-    if (isNegative)
-        cout << "-";
+    if (isNegative) cout << "-";
 
     if (a == 0) {
         cout << "0\n";
         return;
     }
-
+    
+    
     if (a == 1 && b != 1) {
         cout << "sqrt(" << b << ")";
     } else if (a == 1 && b == 1) {
@@ -186,8 +180,7 @@ void rationalizeWithRoot(const string &s) {
     } else {
         cout << a << " sqrt(" << b << ")";
     }
-    if (c != 1)
-        cout << " / " << c;
+    if (c != 1) cout << " / " << c;
     cout << endl;
 }
 
